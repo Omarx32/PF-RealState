@@ -6,6 +6,7 @@ try {
     const response = await createProperty(form)
     res.status(200).json(response)
 } catch (error) {
+    console.error(error);
     res.status(404).json({message: "Failed to create"})
 }
 }
