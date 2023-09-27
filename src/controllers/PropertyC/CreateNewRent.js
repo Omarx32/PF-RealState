@@ -13,7 +13,6 @@ async function createProperty(form){
     const input = form;
     console.log(input);
 
-    // for(const propertyInput of input){
         const{
            title,
            description,
@@ -50,6 +49,5 @@ async function createProperty(form){
         }
 
         return createdProperty
-    // }
 }
 module.exports = createProperty;
