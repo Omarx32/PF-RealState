@@ -1,47 +1,47 @@
 const sequelize = require("sequelize");
-const { DataTypes  } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
-module.exports = (sequelize)=> {
+module.exports = (sequelize) => {
 
     sequelize.define(
         "Property",
         {
-            id:{
+            id: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
                 allowNull: false,
-                unique: true,
+
             },
             title: {
                 type: DataTypes.STRING,
                 allowNull: false,
-            }, 
+            },
             description: {
                 type: DataTypes.STRING,
                 allowNull: false,
-            }, 
+            },
             image: {
                 type: DataTypes.ARRAY(DataTypes.STRING),
                 allowNull: false,
-            },     
+            },
             numBeds: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-            }, 
+            },
             numBaths: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-            }, 
+            },
             nightPrice: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-            }, 
+            },
             availability: {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
                 defaultValue: true,
-            }, 
+            },
             homeCapacity: {
                 type: DataTypes.STRING,
                 allowNull: false,
@@ -54,7 +54,7 @@ module.exports = (sequelize)=> {
 
         },
         {
-         timeStamps:  false,
+            timeStamps: false,
 
         }
     );
