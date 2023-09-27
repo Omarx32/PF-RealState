@@ -9,8 +9,47 @@ cloudinary.config({
 })
 
 
-    async function createProperty(req, res){
+    async function createProperty(form){
+       const input = form;
 
+       for(const propertyInput of input){
+        const{
+           title,
+           description,
+           image,
+           numBeds,
+           numBaths,
+           nightPrice,
+           availability,
+           homeCapacity,
+        }= propertyInput
+        if (!title || !description || !image || !numBaths || !numBeds || !nightPrice || !availability || !homeCapacity){
+            throw new Error("Missing required data")
+        }
+        const imageUrls = [];
+        for (const imageData of image){
+            const result = await cloudinary.uploader.upload(imageData,{
+                folder: "productsDetail"
+            });
+            imageUrls.push(result.secure_url)
+        }
+
+        const newProperty = {title, description, image: imageUrls, numBaths, numBeds, nightPrice, availability, homeCapacity}
+
+        const createdProperty = await Property.create(newProperty)
+
+        const categorys = newProduct.Category;
+        if(categorys){
+            const category = await Category.findOne({where: {name: categorys} });
+            if(!categorys){
+                throw new Error(`Category "${category}" doesn't exist`)
+            }
+            await createdProperty.setCategory(category)
+        }
+
+
+        return createdProperty
+       }
 
 
 
