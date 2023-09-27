@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const multer = require("multer");
 const mercadopago = require("mercadopago");
-
+const routes = require("./routes/index.js");
 // const mercadopagoRoutes = require("./routes/MpRoutes.js");
 require("./db.js");
 
@@ -31,7 +31,7 @@ server.use((req, res, next) => {
   next();
 });
 
-
+server.use("/", routes);
 
 
 mercadopago.configure({
