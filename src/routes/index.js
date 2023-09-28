@@ -4,6 +4,8 @@ const router = express.Router();
 const createProperty = require("./PropertyRoutes/Create");
 const category = require("./CategoryRoutes/CategoryCreate");
 const filterCat= require("./FilterRoutes/FilterRoutes")
+const category = require("./CategoryRoutes/CategoryCreate")
+
 
 
 router.use("/property", createProperty);

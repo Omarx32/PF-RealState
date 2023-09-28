@@ -12,7 +12,6 @@ const createCategory = async (req, res) => {
     );
 
     res.status(201).json(createdCategories);
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Hubo un error al crear las categorías' });
