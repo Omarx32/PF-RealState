@@ -6,7 +6,7 @@ const getProperty = require('../../handlers/PropertyH/getAllProperty')
 const router = express.Router()
 
 router.post('/post', createPropertyH);
-router.get('/getProduct', getProperty)
+router.get('/getProperty', getProperty)
 
 
 module.exports = router;
