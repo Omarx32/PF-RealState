@@ -55,7 +55,7 @@ module.exports = (sequelize) => {
         },
         {
             tableName: "Property",
-            timeStamps: false,
+            timestamps: false,
 
         }
     );

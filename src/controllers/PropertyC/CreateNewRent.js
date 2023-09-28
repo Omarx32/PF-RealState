@@ -41,7 +41,6 @@ async function createProperty(form){
         const createdProperty = await Property.create(newProperty)
 
         const categorys = input.Category;
-
         if(categorys){
             const category = await Category.findOne({where: {name: categorys} });
             if(!category){
