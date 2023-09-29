@@ -19,7 +19,6 @@ module.exports = (sequelize) => {
       },
     },
     {
-      tableName: "Category",
       timestamps: false,
     }
   );
