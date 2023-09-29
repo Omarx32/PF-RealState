@@ -10,7 +10,7 @@ const getAll = async(req, res) =>{
 
         ]
     })
-    return[...property]
+    return [...property]
 }
 const getAllByName = async(title) =>{
     const propertyName = await Property.findAll({

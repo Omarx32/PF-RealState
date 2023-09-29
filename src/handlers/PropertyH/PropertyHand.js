@@ -1,14 +1,15 @@
-const {getAll, getAllByName} = require('../../controllers/PropertyC/PropertyCon')
+const { getAll, getAllByName } = require('../../controllers/PropertyC/PropertyCon')
 
-const getProperty = async (req, res) =>{
+const getProperty = async (req, res) => {
+    const { title } = req.query; // Cambiar de req.query en lugar de req.body
 
-    const {title} = req.query
     try {
-        const response = title ? getAllByName(title) : getAll();
-        res.status(201).json(response)
+        const response = title ? await getAllByName(title) : await getAll(); // Agregar await aquí
+        res.status(200).json(response); // Cambiar el código de estado a 200
     } catch (error) {
-        res.status(500).json({message: 'Not Found'})
-        
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' }); // Cambiar el mensaje de error
     }
 }
-module.exports = getProperty
+
+module.exports = getProperty;
