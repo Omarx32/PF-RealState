@@ -22,8 +22,20 @@ const getAllByName = async(title) =>{
     },)
     return [...propertyName]
 }
-
+const getById = async (id) =>{
+    const property = await Property.findByPk(id,{
+       
+        include: [
+            {
+                model: Category,
+            attributes:['title'],
+        },
+        ],
+    })
+    return property
+}
 module.exports = {
     getAll,
-    getAllByName
+    getAllByName,
+    getById
 }
