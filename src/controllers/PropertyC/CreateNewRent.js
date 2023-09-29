@@ -48,6 +48,15 @@ async function createProperty(form){
             await createdProperty.setCategory(category)
         }
 
+        const location = input.Location;
+        if(location){
+            const loc = await Location.findOne({where: {direction: location} });
+            if(!loc){
+                throw new Error(`Location "${loc}" doesn't exist`)
+            }
+            await createdProperty.setLocation(loc)
+        }
+
         return createdProperty
 }
 module.exports = createProperty;

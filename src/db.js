@@ -47,6 +47,11 @@ Category.belongsToMany(Property, {
 });
 Property.belongsTo(Category);
 
+Location.belongsToMany(Property, {
+    through: "Property_Location"
+});
+Property.belongsTo(Location);
+
 Users.hasMany(Reviews);
 Reviews.belongsTo(Users);
 

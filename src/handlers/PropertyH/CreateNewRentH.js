@@ -9,9 +9,6 @@ try {
     console.error(error);
     res.status(404).json({message: "Failed to create"})
 }
-}catch (error) {
-    res.status(404).json({ message: "Failed to create", error: error.message });
-  }
 }
 
 
