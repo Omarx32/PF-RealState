@@ -12,7 +12,6 @@ cloudinary.config({
 async function createProperty(form){
     const input = form;
     //console.log(input);
-    //console.log(input);
 
         const{
            title,
@@ -40,11 +39,11 @@ async function createProperty(form){
 
         const createdProperty = await Property.create(newProperty)
 
-        const categorys = newProperty.Category;
+        const categorys = input.Category;
         if(categorys){
             const category = await Category.findOne({where: {name: categorys} });
             if(!category){
-                throw new Error(`Category "${category}" doesn't exist`)
+                throw new Error(`Category "${categorys}" doesn't exist`)
             }
             await createdProperty.setCategory(category)
         }
