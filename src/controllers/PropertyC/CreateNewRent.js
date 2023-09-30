@@ -11,8 +11,7 @@ cloudinary.config({
 
 async function createProperty(form) {
     const input = form;
-    //console.log(input);
-    //console.log(input);
+    console.log(input);
 
         const{
            title,
@@ -24,7 +23,7 @@ async function createProperty(form) {
            availability,
            homeCapacity,
         }= input
-        
+
         if (!title || !description || !image || !numBaths || !numBeds || !nightPrice || !availability || !homeCapacity){
             throw new Error("Missing required data")
         }
@@ -41,7 +40,6 @@ async function createProperty(form) {
     const createdProperty = await Property.create(newProperty)
 
         const categorys = input.Category;
-
         if(categorys){
             const category = await Category.findOne({where: {name: categorys} });
             if(!category){
