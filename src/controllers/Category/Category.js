@@ -18,6 +18,14 @@ const createCategory = async (req, res) => {
   }
 };
 
+const getCategorys = async() =>{
+
+    const category = await Category.findAll();
+    return category
+
+}
+
 module.exports = {
   createCategory,
+  getCategorys
 };
