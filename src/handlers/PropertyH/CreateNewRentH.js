@@ -10,3 +10,4 @@ const createPropertyH = async (req, res) => {
     res.status(404).json({ message: "Failed to create", error: error.message });
   }
 };
+module.exports = createPropertyH
