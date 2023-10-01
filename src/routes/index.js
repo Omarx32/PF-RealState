@@ -9,7 +9,7 @@ const filterCat= require("./FilterRoutes/FilterRoutes")
 router.use("/property", createProperty);
 router.use("/allcategories", category);
 router.use('/allLocations', location)
-router.use("/filtCat", filterCat);
+router.use("/filter", filterCat);
 
 
 module.exports = router;

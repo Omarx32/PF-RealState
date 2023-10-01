@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get("/location", filterByLocHandler);
 
-router.get("/", filterByCatHandler);
+router.get("/category", filterByCatHandler);
 
 module.exports=router;
