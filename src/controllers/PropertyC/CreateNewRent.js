@@ -23,7 +23,7 @@ async function createProperty(form){
            availability,
            homeCapacity,
         }= input
-
+        
         if (!title || !description || !image || !numBaths || !numBeds || !nightPrice || !availability || !homeCapacity){
             throw new Error("Missing required data")
         }
@@ -46,6 +46,15 @@ async function createProperty(form){
                 throw new Error(`Category "${categorys}" doesn't exist`)
             }
             await createdProperty.setCategory(category)
+        }
+
+        const location = input.Location;
+        if(location){
+            const loc = await Location.findOne({where: {direction: location} });
+            if(!loc){
+                throw new Error(`Location "${loc}" doesn't exist`)
+            }
+            await createdProperty.setLocation(loc)
         }
 
         return createdProperty
