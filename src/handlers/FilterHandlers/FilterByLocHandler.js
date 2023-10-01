@@ -1,4 +1,4 @@
-const filterHomeByLocation= require('../../controllers/Location/FilterLocation')
+const filterHomeByLocation= require('../../controllers/LocationC/Filterlocation')
 
 const filterByLocHandler= async (req, res)=>{
     try {
