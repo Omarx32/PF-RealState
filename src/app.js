@@ -33,10 +33,9 @@ server.use((req, res, next) => {
 
 server.use("/", routes);
 
-
 mercadopago.configure({
   access_token:
-    "TEST-2664276290314152-091023-a8dbce86749b18cb2960e492a1d25bea-1476921582",
+    "TEST-2963104430506038-100217-49415a1d75916b63cd9df03c8130e1f2-186531266",
 });
 
 module.exports = server;
