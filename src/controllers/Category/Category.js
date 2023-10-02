@@ -8,13 +8,11 @@ const createCategory = async (req, res) => {
     
     const createdCategories = await Promise.all(
       categoryData.map(async (category) => {
-        const categoryName = typeof category === 'string' ? category : category.name;
-        return await Category.create({ name: categoryName });
+        return await Category.create({ name: category });
       })
     );
 
     res.status(201).json(createdCategories);
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
@@ -30,4 +28,5 @@ const getCategorys = async() =>{
 
 module.exports = {
   createCategory,
-}
+  getCategorys
+};
