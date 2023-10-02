@@ -11,11 +11,7 @@ cloudinary.config({
 
 async function createProperty(form){
     const input = form;
-    //console.log(input);
-<<<<<<<<< Temporary merge branch 1
-=========
-    //console.log(input);
->>>>>>>>> Temporary merge branch 2
+
 
         const{
            title,
@@ -44,10 +40,7 @@ async function createProperty(form){
         const createdProperty = await Property.create(newProperty)
 
         const categorys = input.Category;
-<<<<<<<<< Temporary merge branch 1
-=========
 
->>>>>>>>> Temporary merge branch 2
         if(categorys){
             const category = await Category.findOne({where: {name: categorys} });
             if(!category){
