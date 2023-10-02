@@ -56,7 +56,7 @@ async function createProperty(form){
             }
             await createdProperty.setLocation(loc)
         }
-
+        console.log(createdProperty)
         return createdProperty
 }
 module.exports = createProperty;
