@@ -7,7 +7,7 @@ const createCategory = async (req, res) => {
     // Itera sobre cada categoría y crea una nueva entrada en la base de datos
     const createdCategories = await Promise.all(
       categoryData.map(async (category) => {
-        return await Category.create({ name: category.name });
+        return await Category.create({ name: category });
       })
     );
 

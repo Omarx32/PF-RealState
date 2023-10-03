@@ -11,8 +11,7 @@ cloudinary.config({
 
 async function createProperty(form) {
     const input = form;
-    //console.log(input);
-    //console.log(input);
+    console.log(input);
 
     const {
         title,
@@ -46,8 +45,27 @@ async function createProperty(form) {
         if (!categorys) {
             throw new Error(`Category "${category}" doesn't exist`)
         }
-        await createdProperty.setCategory(category)
-    }
+
+        const imageUrls = [];
+        for (const imageData of image){
+            const result = await cloudinary.uploader.upload(imageData,{
+                folder: "productsDetail"
+            });
+            imageUrls.push(result.secure_url)
+        }
+
+    const newProperty = { title, description, image: imageUrls, numBaths, numBeds, nightPrice, availability, homeCapacity }
+
+    const createdProperty = await Property.create(newProperty)
+
+        const categorys = input.Category;
+        if(categorys){
+            const category = await Category.findOne({where: {name: categorys} });
+            if(!category){
+                throw new Error(`Category "${category}" doesn't exist`)
+            }
+            await createdProperty.setCategory(category)
+        }
 
     return createdProperty
 }
