@@ -1,7 +1,7 @@
-const {Property, Category, Location} = require ("../../db");
+const { Property, Category, Location } = require("../../db");
 const cloudinary = require("cloudinary").v2
 require("dotenv").config()
-const {CLOUD_NAME, CLOUD_API, CLOUD_SECRET} = process.env
+const { CLOUD_NAME, CLOUD_API, CLOUD_SECRET } = process.env
 cloudinary.config({
     cloud_name: CLOUD_NAME,
     api_key: CLOUD_API,
@@ -9,8 +9,9 @@ cloudinary.config({
 })
 
 
-async function createProperty(form){
+async function createProperty(form) {
     const input = form;
+
 
 
         const{
@@ -26,7 +27,9 @@ async function createProperty(form){
         
         if (!title || !description || !image || !numBaths || !numBeds || !nightPrice || !availability || !homeCapacity){
             throw new Error("Missing required data")
+
         }
+
         const imageUrls = [];
         for (const imageData of image){
             const result = await cloudinary.uploader.upload(imageData,{
@@ -35,12 +38,11 @@ async function createProperty(form){
             imageUrls.push(result.secure_url)
         }
 
-        const newProperty = {title, description, image: imageUrls, numBaths, numBeds, nightPrice, availability, homeCapacity}
+    const newProperty = { title, description, image: imageUrls, numBaths, numBeds, nightPrice, availability, homeCapacity }
 
-        const createdProperty = await Property.create(newProperty)
+    const createdProperty = await Property.create(newProperty)
 
         const categorys = input.Category;
-
         if(categorys){
             const category = await Category.findOne({where: {name: categorys} });
             if(!category){
@@ -59,5 +61,7 @@ async function createProperty(form){
         }
         console.log(createdProperty)
         return createdProperty
+
 }
+
 module.exports = createProperty;
