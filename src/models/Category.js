@@ -20,6 +20,7 @@ module.exports = (sequelize) => {
     },
     {
       timestamps: false,
+      freezeTableName: false,
     }
   );
 };

@@ -2,9 +2,10 @@ const { Category } = require("../../db");
 
 const createCategory = async (req, res) => {
   try {
-    const categoryData = req.body; // Obtén el arreglo de categorías desde el cuerpo de la solicitud
+    const categoryData = req.body; 
 
-    // Itera sobre cada categoría y crea una nueva entrada en la base de datos
+    console.log(categoryData); 
+    
     const createdCategories = await Promise.all(
       categoryData.map(async (category) => {
         return await Category.create({ name: category });
@@ -14,10 +15,18 @@ const createCategory = async (req, res) => {
     res.status(201).json(createdCategories);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Hubo un error al crear las categorías' });
+    res.status(500).json({ message: error.message });
   }
 };
 
+const getCategorys = async() =>{
+
+    const category = await Category.findAll();
+    return category
+
+}
+
 module.exports = {
   createCategory,
+  getCategorys
 };

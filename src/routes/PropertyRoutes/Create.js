@@ -1,12 +1,12 @@
 const express = require('express');
 const createPropertyH = require('../../handlers/PropertyH/CreateNewRentH')
-const getProperty = require('../../handlers/PropertyH/getAllProperty')
-
+const {getProperty, getPropertybyId} = require('../../handlers/PropertyH/PropertyHand')
 
 const router = express.Router()
 
+router.get('/gproduct', getProperty)
+router.get('/:id', getPropertybyId)
 router.post('/post', createPropertyH);
-router.get('/getProduct', getProperty)
 
 
 module.exports = router;

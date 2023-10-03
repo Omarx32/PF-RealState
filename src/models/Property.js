@@ -1,4 +1,3 @@
-const sequelize = require("sequelize");
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
@@ -38,7 +37,7 @@ module.exports = (sequelize) => {
                 allowNull: false,
             },
             availability: {
-                type: DataTypes.BOOLEAN,
+                type: DataTypes.STRING,
                 allowNull: false,
                 defaultValue: true,
             },
@@ -55,6 +54,8 @@ module.exports = (sequelize) => {
         },
         {
             timestamps: false,
+            freezeTableName: true,
+
 
         }
     );

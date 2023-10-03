@@ -11,39 +11,23 @@ cloudinary.config({
 
 async function createProperty(form) {
     const input = form;
-    console.log(input);
 
-    const {
-        title,
-        description,
-        image,
-        numBeds,
-        numBaths,
-        nightPrice,
-        availability,
-        homeCapacity,
-    } = input
 
-    if (!title || !description || !image || !numBaths || !numBeds || !nightPrice || !availability || !homeCapacity) {
-        throw new Error("Missing required data")
-    }
-    const imageUrls = [];
-    for (const imageData of image) {
-        const result = await cloudinary.uploader.upload(imageData, {
-            folder: "productsDetail"
-        });
-        imageUrls.push(result.secure_url)
-    }
 
-    const newProperty = { title, description, image: imageUrls, numBaths, numBeds, nightPrice, availability, homeCapacity }
+        const{
+           title,
+           description,
+           image,
+           numBeds,
+           numBaths,
+           nightPrice,
+           availability,
+           homeCapacity,
+        }= input
+        
+        if (!title || !description || !image || !numBaths || !numBeds || !nightPrice || !availability || !homeCapacity){
+            throw new Error("Missing required data")
 
-    const createdProperty = await Property.create(newProperty)
-
-    const categorys = newProperty.Category;
-    if (categorys) {
-        const category = await Category.findOne({ where: { name: categorys } });
-        if (!categorys) {
-            throw new Error(`Category "${category}" doesn't exist`)
         }
 
         const imageUrls = [];
@@ -62,12 +46,22 @@ async function createProperty(form) {
         if(categorys){
             const category = await Category.findOne({where: {name: categorys} });
             if(!category){
-                throw new Error(`Category "${category}" doesn't exist`)
+                throw new Error(`Category "${categorys}" doesn't exist`)
             }
             await createdProperty.setCategory(category)
         }
 
-    return createdProperty
+        const location = input.Location;
+        if(location){
+            const loc = await Location.findOne({where: {direction: location} });
+            if(!loc){
+                throw new Error(`Location "${loc}" doesn't exist`)
+            }
+            await createdProperty.setLocation(loc)
+        }
+        console.log(createdProperty)
+        return createdProperty
+
 }
 
 module.exports = createProperty;
