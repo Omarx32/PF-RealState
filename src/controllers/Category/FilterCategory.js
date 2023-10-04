@@ -1,53 +1,57 @@
-const {Property, Category, Location} = require ("../../db");
-const cloudinary = require("cloudinary").v2
-require("dotenv").config()
-const {CLOUD_NAME, CLOUD_API, CLOUD_SECRET} = process.env
-cloudinary.config({
-    cloud_name: CLOUD_NAME,
-    api_key: CLOUD_API,
-    api_secret: CLOUD_SECRET,
-})
+const {Property, Category, Property_Category} = require("../../db");
+const diacriticless = require("diacriticless");
 
+const filterHomeByCategory = async (categoryhome) => {
+  try {
+    const homeFilt = [];
 
-async function createProperty(form){
-    const input = form;
-    //console.log(input);
+    const homes = await Property.findAll();
+    const categories= await Category.findAll();
 
-        const{
-           title,
-           description,
-           image,
-           numBeds,
-           numBaths,
-           nightPrice,
-           availability,
-           homeCapacity,
-        }= input
+    console.log(categories);
+    console.log(homes);
+    for (let i = 0; i < categories.length; i++) {
+        categories[i].dataValues.secondName= diacriticless(categories[i].dataValues.name);
+    }
 
-        if (!title || !description || !image || !numBaths || !numBeds || !nightPrice || !availability || !homeCapacity){
-            throw new Error("Missing required data")
+    
+    const category= categories.find((cat)=>{
+        if(          
+          cat.dataValues.name===categoryhome || 
+          cat.dataValues.name.toLowerCase()===categoryhome.toLowerCase() ||
+          cat.dataValues.name.toUpperCase()===categoryhome.toUpperCase() ||
+          cat.dataValues.secondName===categoryhome || 
+          cat.dataValues.secondName.toLowerCase()===categoryhome.toLowerCase() ||
+          cat.dataValues.secondName.toUpperCase()===categoryhome.toUpperCase()
+          ){
+
+            return cat;
         }
-        const imageUrls = [];
-        for (const imageData of image){
-            const result = await cloudinary.uploader.upload(imageData,{
-                folder: "productsDetail"
-            });
-            imageUrls.push(result.secure_url)
+    })
+
+    console.log(category);
+
+    for(let i = 0; i < homes.length; i++){
+        if(homes[i].dataValues.CategoryId===category.dataValues.id){
+          homeFilt.push(homes[i]);  
         }
+    }
 
-        const newProperty = {title, description, image: imageUrls, numBaths, numBeds, nightPrice, availability, homeCapacity}
-
-        const createdProperty = await Property.create(newProperty)
-
-        const categorys = input.Category;
-        if(categorys){
-            const category = await Category.findOne({where: {name: categorys} });
-            if(!category){
-                throw new Error(`Category "${category}" doesn't exist`)
-            }
-            await createdProperty.setCategory(category)
+    for(let i = 0; i < homeFilt.length; i++){
+        if(homeFilt[i].dataValues.CategoryId===category.dataValues.id){
+            homeFilt[i].dataValues.category=category.dataValues.name;
         }
+    }
 
-        return createdProperty
-}
-module.exports = createProperty;
+
+    if (!homeFilt.length) {
+      throw new Error("No hay propiedad de tal categoría");
+    }
+    return homeFilt;
+  } catch (error) {
+    console.error(error);
+    throw new Error("No se encontró la propiedad", error);
+  }
+};
+
+module.exports = filterHomeByCategory;

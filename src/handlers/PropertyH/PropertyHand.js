@@ -16,7 +16,7 @@ const getPropertybyId = async (req, res )=>{
     const {id} = req.params;
     try {
         const response = await getById(id)
-       
+       console.log(response)
         res.status(200).json(response)
     } catch (error) {
         res.status(404).json({message: 'Not Found', error})
