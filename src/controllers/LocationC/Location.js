@@ -13,10 +13,13 @@ const createLocation = async (req, res) => {
 
     res.status(201).json(createdLocations);
 };
-const getLocationC = async (req, res) => {
-    const location =  await Location.findAll()
 
-        return location
+const getLocationC = async(req, res)=>{
+  const location = await Location.findAll()
+  return location
 }
 
-module.exports = {createLocation, getLocationC}
+
+
+
+module.exports = {createLocation, getLocationC} 

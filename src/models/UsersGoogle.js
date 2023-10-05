@@ -34,10 +34,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      location: {  
-        type: DataTypes.STRING, 
-        allowNull: true, 
-      },
+     
       isBanned: { // Agrega el campo isPublished
         type: DataTypes.BOOLEAN, // Será un booleano
         allowNull: true, // No puede estar vacío
