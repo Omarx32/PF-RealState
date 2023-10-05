@@ -6,13 +6,15 @@ const category = require("./CategoryRoutes/CategoryCreate");
 const location= require("./LocationRoutes/LocationCreate")
 const filterRoutes= require("./FilterRoutes/FilterRoutes");
 const createUserHandler = require('./UsersRoutes/UsersRoutes');
-
+const reservationRoutes=require('./ReservationRoutes/ReservationRoutes')
 
 router.use("/property", createProperty);
 router.use("/allcategories", category);
 router.use("/allLocations", location)
 router.use("/filter", filterRoutes);
-router.use("/user", createUserHandler)
+router.use("/user", createUserHandler);
+router.use("/reservation", reservationRoutes);
+
 
 
 module.exports = router;
