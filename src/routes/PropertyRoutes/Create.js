@@ -8,5 +8,4 @@ router.get('/gproduct', getProperty)
 router.get('/:id', getPropertybyId)
 router.post('/post', createPropertyH);
 
-
 module.exports = router;

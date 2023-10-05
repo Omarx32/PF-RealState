@@ -1,4 +1,4 @@
-const { Property, Category, Location } = require("../../db");
+const {Property, Category, Location, Users, UsersGoogle} = require ("../../db");
 const cloudinary = require("cloudinary").v2
 require("dotenv").config()
 const { CLOUD_NAME, CLOUD_API, CLOUD_SECRET } = process.env
@@ -23,6 +23,8 @@ async function createProperty(form) {
            nightPrice,
            availability,
            homeCapacity,
+           email,
+           password
         }= input
         
         if (!title || !description || !image || !numBaths || !numBeds || !nightPrice || !availability || !homeCapacity){
@@ -43,6 +45,7 @@ async function createProperty(form) {
     const createdProperty = await Property.create(newProperty)
 
         const categorys = input.Category;
+
         if(categorys){
             const category = await Category.findOne({where: {name: categorys} });
             if(!category){
@@ -59,6 +62,37 @@ async function createProperty(form) {
             }
             await createdProperty.setLocation(loc)
         }
+
+        if(email && !password){
+            const userGoogle= await UsersGoogle.findOne({
+                where: {email}
+            });
+            if(userGoogle){
+                await createdProperty.setUsersGoogle(userGoogle);
+            } else{
+                throw new Error("Esta renta no pertenece a ningún usuario")
+            }
+        }
+        if(email && password){
+            const user= await Users.findOne({
+                where: {email, password}
+            });
+            if(user){
+                await createdProperty.setUser(user);             
+            } else{
+                throw new Error("Esta renta no pertenece a ningún usuario")
+            }
+        }
+
+
+        // if(user){
+        //     const userName = await User.findOne({where: {fullName: user} });
+        //     if(!userName){
+        //         throw new Error(`user "${userName}" doesn't exist`)
+        //     }
+        //     await createdProperty.setuser(userName)
+        // }
+
         console.log(createdProperty)
         return createdProperty
 
