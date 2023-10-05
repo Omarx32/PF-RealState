@@ -22,5 +22,4 @@ const getLocation = async (req, res) =>{
 module.exports = {
   handleCreateLocation,
   getLocation
-  getLocation
 };

@@ -1,4 +1,4 @@
-const placeOrder = require("../controllers/MercadoPago/PlaceOrder");
+const placeOrder = require("../../controllers/MercadoPago/PlaceOrder");
 
 const handlePlaceOrder = async (req, res) => {
   try {
