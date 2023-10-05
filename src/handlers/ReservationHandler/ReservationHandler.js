@@ -1,4 +1,5 @@
-const {createReservation, getAllRes}= require('../../controllers/Reservation/createRes')
+const {createReservation, getAllRes}= require('../../controllers/Reservation/createRes');
+const destroyRes= require('../../controllers/Reservation/destroyReservation');
 
 const createResHandler= async (req, res)=>{
     try{
@@ -22,4 +23,16 @@ const getResHandler= async (req, res)=>{
     }
 }
 
-module.exports= {createResHandler, getResHandler};
+const destroyResHandlers= async (req, res)=>{  
+    try {
+        const {id}= req.params;
+        const response= await destroyRes(id, idProp, idUser);
+        res.status(200).send("Reservation successfully deleted")
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ message: "Failed to delete", error: error.message })
+        
+    }
+}
+
+module.exports= {createResHandler, getResHandler, destroyResHandlers};

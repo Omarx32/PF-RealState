@@ -39,7 +39,7 @@ const createReservation= async (month, numHuespedes, home, email, password)=>{
 }
 
 const getAllRes= async (id)=>{
-	const reservations= await Reservation.findAll({});
+	const reservations= await Reservation.findAll();
 
 	console.log(reservations);
 	const reservationsHome=[]
@@ -49,7 +49,6 @@ const getAllRes= async (id)=>{
 			reservationsHome.push(reservations[i]);
 		}
 	}
-
 
 	return reservationsHome;
 }
