@@ -1,4 +1,4 @@
-const {Property, Category} = require('../../db');
+const {Property, Category, Location} = require('../../db');
 
 const getAll = async(req, res) =>{
     const property = await Property.findAll({
@@ -22,8 +22,21 @@ const getAllByName = async(title) =>{
     },)
     return [...propertyName]
 }
-
+const getById = async (id) =>{
+    const property = await Property.findByPk(id,{
+       
+        include: [
+            {
+                model: Category, Location, 
+            attributes:['name'],
+        },
+        ],
+    })
+    console.log(property);
+    return property
+}
 module.exports = {
     getAll,
-    getAllByName
+    getAllByName,
+    getById
 }

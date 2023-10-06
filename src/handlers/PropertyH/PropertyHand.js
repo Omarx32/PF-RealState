@@ -1,4 +1,4 @@
-const { getAll, getAllByName } = require('../../controllers/PropertyC/PropertyCon')
+const { getAll, getAllByName, getById } = require('../../controllers/PropertyC/PropertyCon')
 
 const getProperty = async (req, res) => {
     const { title } = req.query; // Cambiar de req.query en lugar de req.body
@@ -12,4 +12,18 @@ const getProperty = async (req, res) => {
     }
 }
 
-module.exports = getProperty;
+const getPropertybyId = async (req, res )=>{
+    const {id} = req.params;
+    try {
+        const response = await getById(id)
+       console.log(response)
+        res.status(200).json(response)
+    } catch (error) {
+        res.status(404).json({message: 'Not Found', error})
+    }
+}
+
+module.exports = {
+    getProperty,
+    getPropertybyId
+};

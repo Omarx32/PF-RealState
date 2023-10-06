@@ -6,7 +6,7 @@ const handleCreateCategory = async (req, res) => {
     await createCategory(req, res);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Hubo un error al crear la categoría' });
+    res.status(500).json({ message: 'Hubo un error al crear la locación' });
   }
 };
 const getCategories = async (req, res) =>{
