@@ -25,8 +25,8 @@ const getResHandler= async (req, res)=>{
 
 const destroyResHandlers= async (req, res)=>{  
     try {
-        const {id}= req.params;
-        const response= await destroyRes(id, idProp, idUser);
+        const {id}=req.params;
+        const response= await destroyRes(id);
         res.status(200).send("Reservation successfully deleted")
     } catch (error) {
         console.error(error);

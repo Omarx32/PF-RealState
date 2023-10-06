@@ -5,6 +5,6 @@ const router = express.Router()
 
 router.post('/create', createResHandler);
 router.get('/:id', getResHandler);
-router.delete('/:id', destroyResHandlers);
+router.delete('/delete/:id', destroyResHandlers);
 
 module.exports= router;
