@@ -20,13 +20,6 @@ module.exports = (sequelize) => {
               		max: 12,
             		},
   	        },
-	        //reservationStatus:{
-	        //	type: DataTypes.STRING,
-	        //	allowNull: false,
-            	//	validate: {
-              	//	isIn: [['aprobada', 'pendiente', 'rechazada']],
-            	//	},	
-	        //},
 	        price:{
 	        	type:DataTypes.FLOAT,
 	        	allowNull: false,
