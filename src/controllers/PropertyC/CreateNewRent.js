@@ -81,15 +81,6 @@ async function createProperty(form){
             }
         }
 
-
-        // if(user){
-        //     const userName = await User.findOne({where: {fullName: user} });
-        //     if(!userName){
-        //         throw new Error(`user "${userName}" doesn't exist`)
-        //     }
-        //     await createdProperty.setuser(userName)
-        // }
-
         console.log(createdProperty)
         return createdProperty
 }

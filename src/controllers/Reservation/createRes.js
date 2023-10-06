@@ -38,7 +38,7 @@ const createReservation= async (month, numHuespedes, home, email, password)=>{
 	return createRes;
 }
 
-const getAllRes= async (id)=>{
+const getAllResHome= async (id)=>{
 	const reservations= await Reservation.findAll();
 
 	console.log(reservations);
@@ -50,7 +50,37 @@ const getAllRes= async (id)=>{
 		}
 	}
 
+	if(!reservationsHome.length){
+		throw new Error("Esta casa no tiene reservaciones")
+	}
 	return reservationsHome;
 }
 
-module.exports= {createReservation, getAllRes}
+const getAllResUser= async (UserId)=>{
+	const reservations= await Reservation.findAll();
+
+	console.log(reservations);
+	const reservationsUser=[];
+
+	for(let i = 0; i < reservations.length; i++){
+		if(reservations[i].dataValues.UserId===UserId){
+			reservationsUser.push(reservations[i]);
+		}
+	}
+
+	if(!reservationsUser.length){
+		for(let i = 0; i < reservations.length; i++){
+			if(reservations[i].dataValues.UsersGoogleId===UserId){
+				reservationsUser.push(reservations[i]);
+			}
+		}
+	}
+
+	if(reservationsUser){
+		throw new Error("No tienes reservaciones, de momento")	
+	}
+
+	return reservationsUser;
+}
+
+module.exports= {createReservation, getAllResHome, getAllResUser}
