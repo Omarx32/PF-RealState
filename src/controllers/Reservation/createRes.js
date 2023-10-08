@@ -76,7 +76,7 @@ const getAllResUser= async (UserId)=>{
 		}
 	}
 
-	if(!reservationsUser){
+	if(!reservationsUser.length){
 		throw new Error("No tienes reservaciones, de momento")	
 	}
 
