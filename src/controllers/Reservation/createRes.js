@@ -1,18 +1,38 @@
+const diacriticless = require("diacriticless");
 const {Property, Reservation, Users, UsersGoogle} = require ("../../db");
 
 const createReservation= async (month, numHuespedes, home, email, password)=>{
 	if(!month || !numHuespedes || !home){
-		 throw new Error("Missing required data")
+		 throw new Error("Missing required data") 
 	}
 
-	const resHome= await Property.findOne({where: {title:home}})
-	
-	const price= resHome.dataValues.nightPrice
+	const resHomes= await Property.findAll()
+
+	for(let i = 0; i < resHomes.length; i++){
+		resHomes[i].dataValues.secondName= diacriticless(resHomes[i].dataValues.title)
+	}
+	console.log(resHomes);
+	const nameHome= resHomes.find((resHome)=>{
+        if(          
+          resHome.dataValues.title===home || 
+          resHome.dataValues.title.toLowerCase()===home.toLowerCase() ||
+          resHome.dataValues.title.toUpperCase()===home.toUpperCase() ||
+          resHome.dataValues.secondName===home || 
+          resHome.dataValues.secondName.toLowerCase()===home.toLowerCase() ||
+          resHome.dataValues.secondName.toUpperCase()===home.toUpperCase()
+          ){
+            return resHome;
+        }
+    })
+
+	console.log(nameHome);
+
+	const price= nameHome.dataValues.nightPrice
 	const newRes= {month, price, numHuespedes}
 	
 	const createRes= await Reservation.create(newRes)
 	
-	await createRes.setProperty(resHome);
+	await createRes.setProperty(nameHome);
 
 	if(email && !password){
 		const userGoogle= await UsersGoogle.findOne({
