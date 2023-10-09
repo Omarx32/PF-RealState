@@ -24,6 +24,7 @@ const filterHomeByCategory = async (categoryhome) => {
           cat.dataValues.secondName.toLowerCase()===categoryhome.toLowerCase() ||
           cat.dataValues.secondName.toUpperCase()===categoryhome.toUpperCase()
           ){
+
             return cat;
         }
     })

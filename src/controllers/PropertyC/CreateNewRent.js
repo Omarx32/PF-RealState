@@ -26,7 +26,9 @@ async function createProperty(form) {
         
         if (!title || !description || !image || !numBaths || !numBeds || !nightPrice || !availability || !homeCapacity){
             throw new Error("Missing required data")
+
         }
+
         const imageUrls = [];
         for (const imageData of image){
             const result = await cloudinary.uploader.upload(imageData,{
@@ -42,7 +44,6 @@ async function createProperty(form) {
         const createdProperty = await Property.create(newProperty)
 
         const categorys = input.Category;
-
         if(categorys){
             const category = await Category.findOne({where: {name: categorys} });
             if(!category){

@@ -20,4 +20,5 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
   res.redirect('/home');
 });
 
+
 module.exports = router;
