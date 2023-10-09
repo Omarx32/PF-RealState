@@ -1,4 +1,4 @@
-const {createReservation, getAllRes}= require('../../controllers/Reservation/createRes');
+const {createReservation, getAllResHome, getAllResUser}= require('../../controllers/Reservation/createRes');
 const destroyRes= require('../../controllers/Reservation/destroyReservation');
 
 const createResHandler= async (req, res)=>{
@@ -12,21 +12,32 @@ const createResHandler= async (req, res)=>{
     }
 }
 
-const getResHandler= async (req, res)=>{
+const getResHomeHandler= async (req, res)=>{
     try {
         const {id}=req.params;
-        const response= await getAllRes(id); 
+        const response= await getAllResHome(id); 
         res.status(200).json(response);
     } catch (error) {
         console.error(error);
-        res.status(400).json({ message: "Failed to get", error: error.message })        
+        res.status(400).json({error: error.message })        
+    }
+}
+
+const getResUserHandler= async (req, res)=>{
+    try {
+        const {UserId}=req.params;
+        const response= await getAllResUser(UserId); 
+        res.status(200).json(response);
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({error: error.message })        
     }
 }
 
 const destroyResHandlers= async (req, res)=>{  
     try {
-        const {id}= req.params;
-        const response= await destroyRes(id, idProp, idUser);
+        const {id}=req.params;
+        const response= await destroyRes(id);
         res.status(200).send("Reservation successfully deleted")
     } catch (error) {
         console.error(error);
@@ -35,4 +46,4 @@ const destroyResHandlers= async (req, res)=>{
     }
 }
 
-module.exports= {createResHandler, getResHandler, destroyResHandlers};
+module.exports= {createResHandler, getResHomeHandler, getResUserHandler,destroyResHandlers};

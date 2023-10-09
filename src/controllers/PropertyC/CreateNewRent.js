@@ -13,7 +13,6 @@ async function createProperty(form) {
     const input = form;
 
 
-
         const{
            title,
            description,
@@ -39,10 +38,12 @@ async function createProperty(form) {
             });
             imageUrls.push(result.secure_url)
         }
+        await createdProperty.setCategory(category)
+    
 
-    const newProperty = { title, description, image: imageUrls, numBaths, numBeds, nightPrice, availability, homeCapacity }
+        const newProperty = {title, description, image: imageUrls, numBaths, numBeds, nightPrice, availability, homeCapacity}
 
-    const createdProperty = await Property.create(newProperty)
+        const createdProperty = await Property.create(newProperty)
 
         const categorys = input.Category;
 
@@ -95,7 +96,6 @@ async function createProperty(form) {
 
         console.log(createdProperty)
         return createdProperty
-
 }
 
 module.exports = createProperty;

@@ -12,7 +12,17 @@ const createUser = async (req, res) => {
       }
     }
   };
+
+const getAllUsers= async ()=>{
+  const users= await Users.findAll();
+  const usersGoogle= await UsersGoogle.findAll();
+
+  const allUsers=[...users, ...usersGoogle];
+
+  return allUsers;
+
+}
   
   module.exports = {
-    createUser,
+    createUser, getAllUsers
   };

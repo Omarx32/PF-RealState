@@ -12,7 +12,15 @@ const loginUsers = async (req, res) => {
     });
 
     if (user) {
-      res.status(200).json({ message: 'Inicio de sesión exitoso', user: user });
+      res.status(200).json({
+        message: 'Inicio de sesión exitoso',
+        user: {
+          id: user.id,
+          fullName: user.fullName,
+          email: user.email,
+      
+        }
+      });
     } else {
       res.status(401).json({ message: 'Credenciales inválidas' });
     }
