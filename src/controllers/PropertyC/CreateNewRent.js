@@ -35,7 +35,7 @@ async function createProperty(form) {
             imageUrls.push(result.secure_url)
         }
         await createdProperty.setCategory(category)
-    }
+    
 
         const newProperty = {title, description, image: imageUrls, numBaths, numBeds, nightPrice, availability, homeCapacity}
 
