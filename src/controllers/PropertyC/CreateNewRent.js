@@ -1,4 +1,4 @@
-const { Property, Category, Location } = require("../../db");
+const {Property, Category, Location} = require ("../../db");
 const cloudinary = require("cloudinary").v2
 require("dotenv").config()
 const { CLOUD_NAME, CLOUD_API, CLOUD_SECRET } = process.env
@@ -22,6 +22,8 @@ async function createProperty(form) {
            nightPrice,
            availability,
            homeCapacity,
+           email,
+           password
         }= input
         
         if (!title || !description || !image || !numBaths || !numBeds || !nightPrice || !availability || !homeCapacity){
@@ -44,6 +46,7 @@ async function createProperty(form) {
         const createdProperty = await Property.create(newProperty)
 
         const categorys = input.Category;
+
         if(categorys){
             const category = await Category.findOne({where: {name: categorys} });
             if(!category){
