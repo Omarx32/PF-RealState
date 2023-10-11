@@ -10,13 +10,11 @@ exports.getMonthlyStatistics = async (req, res) => {
   
       const numberOfReservations = reservations.length;
       const totalReservationPrice = reservations.reduce((total, reservation) => total + reservation.price, 0);
-      const fivePercentOfTotalPrice = totalReservationPrice * 0.05;
-      const totalEarnings = totalReservationPrice - fivePercentOfTotalPrice;
+      const totalEarnings = totalReservationPrice
   
       const statistics = {
         numberOfReservations,
         totalReservationPrice,
-        fivePercentOfTotalPrice,
         totalEarnings
       };
   
