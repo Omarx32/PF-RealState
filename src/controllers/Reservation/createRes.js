@@ -1,38 +1,48 @@
 const diacriticless = require("diacriticless");
 const {Property, Reservation, Users, UsersGoogle} = require ("../../db");
 
-const createReservation= async (month, numHuespedes, home, email, password)=>{
-	if(!month || !numHuespedes || !home){
+const createReservation= async (month, numHuespedes, idHome, email, password)=>{
+	console.log(month);
+	console.log(numHuespedes);
+	console.log(idHome);
+	console.log(email);
+	console.log(password);
+	if(!month || 
+		!numHuespedes || 
+		!idHome){
 		 throw new Error("Missing required data") 
 	}
+	
 
-	const resHomes= await Property.findAll()
+	const resHome= await Property.findByPk(idHome)
 
-	for(let i = 0; i < resHomes.length; i++){
-		resHomes[i].dataValues.secondName= diacriticless(resHomes[i].dataValues.title)
-	}
-	console.log(resHomes);
-	const nameHome= resHomes.find((resHome)=>{
-        if(          
-          resHome.dataValues.title===home || 
-          resHome.dataValues.title.toLowerCase()===home.toLowerCase() ||
-          resHome.dataValues.title.toUpperCase()===home.toUpperCase() ||
-          resHome.dataValues.secondName===home || 
-          resHome.dataValues.secondName.toLowerCase()===home.toLowerCase() ||
-          resHome.dataValues.secondName.toUpperCase()===home.toUpperCase()
-          ){
-            return resHome;
-        }
-    })
+	// const resHomes= await Property.findAll()
 
-	console.log(nameHome);
+	// for(let i = 0; i < resHomes.length; i++){
+	// 	resHomes[i].dataValues.secondName= diacriticless(resHomes[i].dataValues.title)
+	// }
+	// console.log(resHomes);
+	// const nameHome= resHomes.find((resHome)=>{
+    //     if(          
+    //       resHome.dataValues.title===home || 
+    //       resHome.dataValues.title.toLowerCase()===home.toLowerCase() ||
+    //       resHome.dataValues.title.toUpperCase()===home.toUpperCase() ||
+    //       resHome.dataValues.secondName===diacriticless(home) || 
+    //       resHome.dataValues.secondName.toLowerCase()===diacriticless(home.toLowerCase()) ||
+    //       resHome.dataValues.secondName.toUpperCase()===diacriticless(home.toUpperCase())
+    //       ){
+    //         return resHome;
+    //     }
+    // })
 
-	const price= nameHome.dataValues.nightPrice
+	// console.log(reservationsHome);
+
+	const price= resHome.dataValues.nightPrice
 	const newRes= {month, price, numHuespedes}
 	
 	const createRes= await Reservation.create(newRes)
 	
-	await createRes.setProperty(nameHome);
+	await createRes.setProperty(resHome);
 
 	if(email && !password){
 		const userGoogle= await UsersGoogle.findOne({

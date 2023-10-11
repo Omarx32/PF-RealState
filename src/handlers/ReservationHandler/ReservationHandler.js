@@ -3,8 +3,8 @@ const destroyRes= require('../../controllers/Reservation/destroyReservation');
 
 const createResHandler= async (req, res)=>{
     try{
-        const {month, numHuespedes, home, email, password}=req.body;
-        const response= await createReservation(month, numHuespedes, home, email, password);
+        const {month, numHuespedes, idHome, email, password}=req.body;
+        const response= await createReservation(month, numHuespedes, idHome, email, password);
         res.status(200).json(response);
     } catch(error){
         console.error(error)

@@ -33,7 +33,6 @@ server.use((req, res, next) => {
 
 server.use("/", routes);
 
-
 mercadopago.configure({
   access_token:
     "TEST-2664276290314152-091023-a8dbce86749b18cb2960e492a1d25bea-1476921582",
