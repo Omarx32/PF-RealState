@@ -1,4 +1,4 @@
-const {Property, Category, Location, Users, UsersGoogle} = require ("../../db");
+const {Property, Category, Location,UsersGoogle,Users} = require ("../../db");
 const cloudinary = require("cloudinary").v2
 require("dotenv").config()
 const { CLOUD_NAME, CLOUD_API, CLOUD_SECRET } = process.env
@@ -13,7 +13,8 @@ async function createProperty(form) {
     const input = form;
 
 
-        const{
+        const {
+
            title,
            description,
            image,
@@ -38,7 +39,7 @@ async function createProperty(form) {
             });
             imageUrls.push(result.secure_url)
         }
-        await createdProperty.setCategory(category)
+    
     
 
         const newProperty = {title, description, image: imageUrls, numBaths, numBeds, nightPrice, availability, homeCapacity}
@@ -79,20 +80,13 @@ async function createProperty(form) {
                 where: {email, password}
             });
             if(user){
-                await createdProperty.setUser(user);             
+                await createdProperty.setUser(user);
             } else{
                 throw new Error("Esta renta no pertenece a ningún usuario")
             }
         }
 
 
-        // if(user){
-        //     const userName = await User.findOne({where: {fullName: user} });
-        //     if(!userName){
-        //         throw new Error(`user "${userName}" doesn't exist`)
-        //     }
-        //     await createdProperty.setuser(userName)
-        // }
 
         console.log(createdProperty)
         return createdProperty

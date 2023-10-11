@@ -8,7 +8,7 @@ const filterRoutes = require("./FilterRoutes/FilterRoutes");
 const createUserHandler = require("./UsersRoutes/UsersRoutes");
 const mpRoutes = require("./MpRoutes/Mercado");
 const reservationRoutes=require('./ReservationRoutes/ReservationRoutes')
->>>>>>>>> Temporary merge branch 2
+const dashBoardRoutes = require("./DashboardRentRoutes/DashboardCreated")
 
 router.use("/property", createProperty);
 router.use("/allcategories", category);
@@ -17,8 +17,7 @@ router.use("/filter", filterRoutes);
 router.use("/user", createUserHandler);
 router.use("/mp", mpRoutes);
 router.use("/reservation", reservationRoutes);
-
->>>>>>>>> Temporary merge branch 2
+router.use("/dashboard", dashBoardRoutes)
 
 
 module.exports = router;
