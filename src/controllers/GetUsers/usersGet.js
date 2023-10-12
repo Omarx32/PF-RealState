@@ -7,10 +7,8 @@ const usersGet = async (req, res) => {
       UsersGoogle.findAll()
     ]);
 
-    const combinedUsers = {
-      regularUsers: users,
-      googleUsers: usersGoogle
-    };
+    // Combinar usuarios en una sola lista
+    const combinedUsers = users.concat(usersGoogle);
 
     res.json(combinedUsers);
   } catch (error) {
