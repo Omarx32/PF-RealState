@@ -1,116 +1,139 @@
 const diacriticless = require("diacriticless");
-const {Property, Reservation, Users, UsersGoogle} = require ("../../db");
+const { Property, Reservation, Users, UsersGoogle } = require("../../db");
 
-const createReservation= async (month, numHuespedes, idHome, email, password)=>{
-	console.log(month);
-	console.log(numHuespedes);
-	console.log(idHome);
-	console.log(email);
-	console.log(password);
-	if(!month || 
-		!numHuespedes || 
-		!idHome){
-		 throw new Error("Missing required data") 
-	}
-	
+const createReservation = async (
+  month,
+  numHuespedes,
+  idHome,
+  email,
+  password
+) => {
+  console.log(month);
+  console.log(numHuespedes);
+  console.log(idHome);
+  console.log(email);
+  console.log(password);
+  if (!month || !numHuespedes || !idHome) {
+    throw new Error("Missing required data");
+  }
 
-	const resHome= await Property.findByPk(idHome)
+  const resHome = await Property.findByPk(idHome);
 
-	// const resHomes= await Property.findAll()
+  // const resHomes= await Property.findAll()
 
-	// for(let i = 0; i < resHomes.length; i++){
-	// 	resHomes[i].dataValues.secondName= diacriticless(resHomes[i].dataValues.title)
-	// }
-	// console.log(resHomes);
-	// const nameHome= resHomes.find((resHome)=>{
-    //     if(          
-    //       resHome.dataValues.title===home || 
-    //       resHome.dataValues.title.toLowerCase()===home.toLowerCase() ||
-    //       resHome.dataValues.title.toUpperCase()===home.toUpperCase() ||
-    //       resHome.dataValues.secondName===diacriticless(home) || 
-    //       resHome.dataValues.secondName.toLowerCase()===diacriticless(home.toLowerCase()) ||
-    //       resHome.dataValues.secondName.toUpperCase()===diacriticless(home.toUpperCase())
-    //       ){
-    //         return resHome;
-    //     }
-    // })
+  // for(let i = 0; i < resHomes.length; i++){
+  // 	resHomes[i].dataValues.secondName= diacriticless(resHomes[i].dataValues.title)
+  // }
+  // console.log(resHomes);
+  // const nameHome= resHomes.find((resHome)=>{
+  //     if(
+  //       resHome.dataValues.title===home ||
+  //       resHome.dataValues.title.toLowerCase()===home.toLowerCase() ||
+  //       resHome.dataValues.title.toUpperCase()===home.toUpperCase() ||
+  //       resHome.dataValues.secondName===diacriticless(home) ||
+  //       resHome.dataValues.secondName.toLowerCase()===diacriticless(home.toLowerCase()) ||
+  //       resHome.dataValues.secondName.toUpperCase()===diacriticless(home.toUpperCase())
+  //       ){
+  //         return resHome;
+  //     }
+  // })
 
-	// console.log(reservationsHome);
+  // console.log(reservationsHome);
 
-	const price= resHome.dataValues.nightPrice
-	const newRes= {month, price, numHuespedes}
-	
-	const createRes= await Reservation.create(newRes)
-	
-	await createRes.setProperty(resHome);
+  const price = resHome.dataValues.nightPrice;
+  const newRes = { month, price, numHuespedes };
 
-	if(email && !password){
-		const userGoogle= await UsersGoogle.findOne({
-			where: {email}
-		});
-		if(userGoogle){
-			await createRes.setUsersGoogle(userGoogle);
-		} else{
-			throw new Error("Esta renta no pertenece a ningún usuario")
-		}
-	}
-	if(email && password){
-		const user= await Users.findOne({
-			where: {email, password}
-		});
-		if(user){
-			await createRes.setUser(user);             
-		} else{
-			throw new Error("Esta renta no pertenece a ningún usuario")
-		}
-	}
+  const createRes = await Reservation.create(newRes);
 
-	return createRes;
-}
+  await createRes.setProperty(resHome);
 
-const getAllResHome= async (id)=>{
-	const reservations= await Reservation.findAll();
+  if (email && !password) {
+    const userGoogle = await UsersGoogle.findOne({
+      where: { email },
+    });
+    if (userGoogle) {
+      await createRes.setUsersGoogle(userGoogle);
+    } else {
+      throw new Error("Esta renta no pertenece a ningún usuario");
+    }
+  }
+  if (email && password) {
+    const user = await Users.findOne({
+      where: { email, password },
+    });
+    if (user) {
+      await createRes.setUser(user);
+    } else {
+      throw new Error("Esta renta no pertenece a ningún usuario");
+    }
+  }
 
-	console.log(reservations);
-	const reservationsHome=[]
+  return createRes;
+};
 
-	for(let i = 0; i < reservations.length; i++){
-		if(reservations[i].dataValues.PropertyId===id){
-			reservationsHome.push(reservations[i]);
-		}
-	}
+const getAllResHome = async (id) => {
+  const reservations = await Reservation.findAll();
 
-	if(!reservationsHome.length){
-		throw new Error("Esta casa no tiene reservaciones")
-	}
-	return reservationsHome;
-}
+  console.log(reservations);
+  const reservationsHome = [];
 
-const getAllResUser= async (UserId)=>{
-	const reservations= await Reservation.findAll();
+  for (let i = 0; i < reservations.length; i++) {
+    if (reservations[i].dataValues.PropertyId === id) {
+      reservationsHome.push(reservations[i]);
+    }
+  }
 
-	console.log(reservations);
-	const reservationsUser=[];
+  if (!reservationsHome.length) {
+    throw new Error("Esta casa no tiene reservaciones");
+  }
+  return reservationsHome;
+};
 
-	for(let i = 0; i < reservations.length; i++){
-		if(reservations[i].dataValues.UserId===UserId){
-			reservationsUser.push(reservations[i]);
-		}
-	}
+const getAllResUser = async (UserEmail) => {
+  const reservations = await Reservation.findAll();
+  const properties = await Property.findAll();
+  const user = await Users.findOne({ where: { email: UserEmail } });
+  const userGoogle = await UsersGoogle.findOne({ where: { email: UserEmail } });
 
-	if(!reservationsUser.length){
-		for(let i = 0; i < reservations.length; i++){
-			if(reservations[i].dataValues.UsersGoogleId===UserId){
-				reservationsUser.push(reservations[i]);
-			}
-		}
-	}
+  const reservationsUser = [];
 
-	if(!reservationsUser.length){
-		throw new Error("No tienes reservaciones, de momento")	
-	}
+  for (let i = 0; i < reservations.length; i++) {
+    if (
+      reservations[i].dataValues.UserId ||
+      reservations[i].dataValues.UsersGoogleId
+    ) {
+      reservationsUser.push(reservations[i]);
+    }
+  }
 
-	return reservationsUser;
-}
+  //   if (!reservationsUser.length) {
+  //     for (let i = 0; i < reservations.length; i++) {
+  //       if (
+  //         reservations[i].dataValues.UsersGoogleId === userGoogle.dataValues.id
+  //       ) {
+  //         reservationsUser.push(reservations[i]);
+  //       }
+  //     }
+  //   }
 
-module.exports= {createReservation, getAllResHome, getAllResUser}
+  if (!reservationsUser.length) {
+    throw new Error("No tienes reservaciones, de momento");
+  }
+
+  for (let i = 0; i < reservationsUser.length; i++) {
+    for (let j = 0; j < properties.length; j++) {
+      if (
+        reservationsUser[i].dataValues.PropertyId ===
+        properties[j].dataValues.id
+      ) {
+        reservationsUser[i].dataValues.PropertyTitle =
+          properties[j].dataValues.title;
+      }
+    }
+  }
+  console.log(reservationsUser);
+
+  return reservationsUser;
+};
+
+module.exports = { createReservation, getAllResHome, getAllResUser };
