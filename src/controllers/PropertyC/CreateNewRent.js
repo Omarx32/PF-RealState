@@ -24,7 +24,7 @@ async function createProperty(form) {
     numBeds,
     numBaths,
     nightPrice,
-    availability,
+
     homeCapacity,
     email,
   } = input;
@@ -36,7 +36,6 @@ async function createProperty(form) {
     !numBaths ||
     !numBeds ||
     !nightPrice ||
-    !availability ||
     !homeCapacity ||
     !email
   ) {
@@ -58,7 +57,7 @@ async function createProperty(form) {
     numBaths,
     numBeds,
     nightPrice,
-    availability,
+
     homeCapacity,
   };
 
