@@ -17,7 +17,7 @@ async function sendSuccessEmail() {
       from: '"Wander Luxe" <wanderluxe01@gmail.com>',
       to: "wanderluxe01@gmail.com",
       subject: "¡Compra exitosa!",
-      text: "Su compra en Wander Luxe ha sido exitosa. ¡Gracias por su compra!",
+      text: "Su reserva en Wander Luxe ha sido exitosa. ¡Gracias por su compra!",
     });
 
     console.log("Mensaje de compra exitosa enviado: %s", info.messageId);
@@ -36,7 +36,7 @@ async function sendFailureEmail() {
       from: '"Wander Luxe" <wanderluxe01@gmail.com>',
       to: "miguegorriti@gmail.com",
       subject: "¡Compra fallida!",
-      text: "Su compra en Wander Luxe ha sido rechazada. Por favor, verifique su información de pago.",
+      text: "Su reserva en Wander Luxe ha sido rechazada. Por favor, verifique su información de pago.",
     });
 
     console.log("Mensaje de compra fallida enviado: %s", info.messageId);
