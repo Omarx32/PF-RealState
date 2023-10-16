@@ -9,6 +9,7 @@ const createUserHandler = require("./UsersRoutes/UsersRoutes");
 const mpRoutes = require("./MpRoutes/Mercado");
 const reservationRoutes = require("./ReservationRoutes/ReservationRoutes");
 const dashBoardRoutes = require("./DashboardRentRoutes/DashboardCreated");
+const reviewRoutes= require('./ReviewRoutes/ReviewRoutes')
 
 router.use("/property", createProperty);
 router.use("/allcategories", category);
@@ -17,6 +18,7 @@ router.use("/filter", filterRoutes);
 router.use("/user", createUserHandler);
 router.use("/mp", mpRoutes);
 router.use("/reservation", reservationRoutes);
+router.use("/review", reviewRoutes);
 router.use("/dashboard", dashBoardRoutes);
 
 module.exports = router;
