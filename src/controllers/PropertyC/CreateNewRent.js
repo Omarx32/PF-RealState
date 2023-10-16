@@ -27,6 +27,7 @@ async function createProperty(form) {
     availability,
     homeCapacity,
     email,
+    password
   } = input;
 
   if (
@@ -83,7 +84,7 @@ async function createProperty(form) {
     await createdProperty.setLocation(loc);
   }
 
-  if (email) {
+  if (email && !password) {
     const userGoogle = await UsersGoogle.findOne({
       where: { email },
     });
@@ -93,7 +94,7 @@ async function createProperty(form) {
       throw new Error("Esta renta no pertenece a ningún usuario");
     }
   }
-  if (email) {
+  if (email && password) {
     const user = await Users.findOne({
       where: { email, password },
     });

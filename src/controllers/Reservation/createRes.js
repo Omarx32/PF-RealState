@@ -97,24 +97,28 @@ const getAllResUser = async (UserEmail) => {
 
   const reservationsUser = [];
 
-  for (let i = 0; i < reservations.length; i++) {
-    if (
-      reservations[i].dataValues.UserId ||
-      reservations[i].dataValues.UsersGoogleId
-    ) {
+  // for (let i = 0; i < reservations.length; i++) {
+  //   if (
+  //     reservations[i].dataValues.UserId ||
+  //     reservations[i].dataValues.UsersGoogleId
+  //   ) {
+  //     reservationsUser.push(reservations[i]);
+  //   }
+  // }
+
+  for(let i = 0; i < reservations.length; i++){
+    if(reservations[i].dataValues.UserId && reservations[i].dataValues.UserId===user.dataValues.id){
       reservationsUser.push(reservations[i]);
     }
   }
 
-  //   if (!reservationsUser.length) {
-  //     for (let i = 0; i < reservations.length; i++) {
-  //       if (
-  //         reservations[i].dataValues.UsersGoogleId === userGoogle.dataValues.id
-  //       ) {
-  //         reservationsUser.push(reservations[i]);
-  //       }
-  //     }
-  //   }
+    if (!reservationsUser.length) {
+      for (let i = 0; i < reservations.length; i++) {
+        if (reservations[i].dataValues.UsersGoogleId && reservations[i].dataValues.UsersGoogleId === userGoogle.dataValues.id) {
+          reservationsUser.push(reservations[i]);
+        }
+      }
+    }
 
   if (!reservationsUser.length) {
     throw new Error("No tienes reservaciones, de momento");
