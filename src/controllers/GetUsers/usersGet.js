@@ -4,19 +4,18 @@ const usersGet = async (req, res) => {
   try {
     const [users, usersGoogle] = await Promise.all([
       Users.findAll(),
-      UsersGoogle.findAll()
+      UsersGoogle.findAll(),
     ]);
 
-    // Combinar usuarios en una sola lista
     const combinedUsers = users.concat(usersGoogle);
 
     res.json(combinedUsers);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error fetching users' });
+    res.status(500).json({ message: "Error fetching users" });
   }
 };
 
 module.exports = {
-  usersGet
+  usersGet,
 };

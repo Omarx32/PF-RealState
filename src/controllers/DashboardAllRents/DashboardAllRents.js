@@ -43,6 +43,3 @@ const DashboardAllRents = async () => {
 
 module.exports = { DashboardAllRents };
 
-  
-
-module.exports = {DashboardAllRents}

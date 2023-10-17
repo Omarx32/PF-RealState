@@ -3,7 +3,6 @@ const placeOrder = require("../../controllers/Mercadopago/PlaceOrder");
 const handlePlaceOrder = async (req, res) => {
   try {
     const items = Array.isArray(req.body) ? req.body : [req.body];
-    console.log(items)
     const response = await placeOrder(items);
     return res.status(200).json({ response });
   } catch (error) {

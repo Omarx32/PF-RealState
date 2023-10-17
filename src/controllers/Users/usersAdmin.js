@@ -4,8 +4,10 @@ const usersAdmin = async (req, res) => {
   const userId = req.params.id;
   const { isBanned } = req.body;
 
-  if (typeof isBanned !== 'boolean') {
-    return res.status(400).json({ message: "El campo 'isBanned' debe ser un valor booleano" });
+  if (typeof isBanned !== "boolean") {
+    return res
+      .status(400)
+      .json({ message: "El campo 'isBanned' debe ser un valor booleano" });
   }
 
   try {
@@ -26,8 +28,11 @@ const usersAdmin = async (req, res) => {
     user.isBanned = isBanned;
     await user.save();
 
-
-    return res.json({ message: `El usuario ${user.fullName} ha sido ${isBanned === "Baneado" ? "baneado" : "desbaneado"}.` });
+    return res.json({
+      message: `El usuario ${user.fullName} ha sido ${
+        isBanned === "Baneado" ? "baneado" : "desbaneado"
+      }.`,
+    });
   } catch (error) {
     console.error("Error al banear/desbanear el usuario:", error);
     return res.status(500).json({ message: "Error interno del servidor" });

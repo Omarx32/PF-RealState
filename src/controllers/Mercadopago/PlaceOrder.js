@@ -1,5 +1,8 @@
 const mercadopago = require("mercadopago");
-const {sendSuccessEmail, sendFailureEmail} = require("../envioMail/envioMail")
+const {
+  sendSuccessEmail,
+  sendFailureEmail,
+} = require("../envioMail/envioMail");
 
 mercadopago.configure({
   access_token:
@@ -21,7 +24,7 @@ async function placeOrder(items) {
       pending: "http://localhost:3001/mp/pending",
     },
   };
-  console.log("Preference",preference);
+  console.log("Preference", preference);
   const response = await mercadopago.preferences.create(preference);
   console.log("Estado de la respuesta de MercadoPago:", response.status);
 
@@ -35,6 +38,5 @@ async function placeOrder(items) {
 
   return response;
 }
-
 
 module.exports = placeOrder;
