@@ -13,7 +13,7 @@ const createReservation = async (
   console.log(idHome);
   console.log(email);
   console.log(password);
-  if (!month || !numHuespedes || !idHome) {
+  if (!month || !numHuespedes || !idHome || !email) {
     throw new Error("Missing required data");
   }
 
