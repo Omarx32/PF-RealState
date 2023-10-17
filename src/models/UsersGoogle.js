@@ -30,10 +30,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
      
       isBanned: { // Agrega el campo isPublished
         type: DataTypes.BOOLEAN, // Será un booleano

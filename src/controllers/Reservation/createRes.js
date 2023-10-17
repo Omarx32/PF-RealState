@@ -107,14 +107,16 @@ const getAllResUser = async (UserEmail) => {
   // }
 
   for(let i = 0; i < reservations.length; i++){
-    if(reservations[i].dataValues.UserId && reservations[i].dataValues.UserId===user.dataValues.id){
+    if(!reservations[i].dataValues.UserId || !user){break;}
+    if(reservations[i].dataValues.UserId===user.dataValues.id){
       reservationsUser.push(reservations[i]);
     }
   }
 
     if (!reservationsUser.length) {
       for (let i = 0; i < reservations.length; i++) {
-        if (reservations[i].dataValues.UsersGoogleId && reservations[i].dataValues.UsersGoogleId === userGoogle.dataValues.id) {
+        if(!reservations[i].dataValues.UsersGoogleId || userGoogle){break;}
+        if (reservations[i].dataValues.UsersGoogleId === userGoogle.dataValues.id) {
           reservationsUser.push(reservations[i]);
         }
       }
