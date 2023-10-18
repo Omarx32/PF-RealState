@@ -1,4 +1,3 @@
-const diacriticless = require("diacriticless");
 const { Property, Reservation, Users, UsersGoogle } = require("../../db");
 
 const createReservation = async (
