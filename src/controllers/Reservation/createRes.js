@@ -95,27 +95,23 @@ const getAllResUser = async (UserEmail) => {
   const user = await Users.findOne({ where: { email: UserEmail } });
   const userGoogle = await UsersGoogle.findOne({ where: { email: UserEmail } });
 
+  console.log(user);
+  // console.log(userGoogle);
+
   const reservationsUser = [];
 
-  // for (let i = 0; i < reservations.length; i++) {
-  //   if (
-  //     reservations[i].dataValues.UserId ||
-  //     reservations[i].dataValues.UsersGoogleId
-  //   ) {
-  //     reservationsUser.push(reservations[i]);
-  //   }
-  // }
-
   for(let i = 0; i < reservations.length; i++){
-    if(!reservations[i].dataValues.UserId || !user){break;}
+    if(!reservations[i].dataValues.UserId || !user){continue;}
     if(reservations[i].dataValues.UserId===user.dataValues.id){
       reservationsUser.push(reservations[i]);
     }
   }
+  console.log(reservationsUser);
 
     if (!reservationsUser.length) {
       for (let i = 0; i < reservations.length; i++) {
-        if(!reservations[i].dataValues.UsersGoogleId || userGoogle){break;}
+        if(!reservations[i].dataValues.UsersGoogleId || !userGoogle){continue;}
+        console.log(userGoogle);
         if (reservations[i].dataValues.UsersGoogleId === userGoogle.dataValues.id) {
           reservationsUser.push(reservations[i]);
         }

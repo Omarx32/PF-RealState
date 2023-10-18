@@ -1,4 +1,4 @@
-const {createReview, getReviewsHome}= require('../../controllers/Reviews/createReview');
+const {createReview, getReviewsHome, getReviewsUser}= require('../../controllers/Reviews/createReview');
 const destroyReview= require('../../controllers/Reviews/destroyReview')
 const createReviewHandler= async (req, res)=>{
     try {
@@ -11,7 +11,7 @@ const createReviewHandler= async (req, res)=>{
     }
 }
 
-const getReviewsHandler= async (req, res)=>{
+const getReviewsHomeHandler= async (req, res)=>{
     try {
         const {id}= req.params;
         const response= await getReviewsHome(id);
@@ -20,6 +20,17 @@ const getReviewsHandler= async (req, res)=>{
         res.status(400).json({ message: "Failed to get", error: error.message});
     }
 }
+
+const getReviewsUserHandler = async (req, res) => {
+    try {
+      const { email } = req.query;
+      const response = await getReviewsUser(email);
+      res.status(200).json(response);
+    } catch (error) {
+      console.error(error);
+      res.status(400).json({ error: error.message });
+    }
+  };
 
 const destroyReviewHandler = async (req, res) => {
     try {
@@ -33,4 +44,4 @@ const destroyReviewHandler = async (req, res) => {
   };
   
 
-module.exports={createReviewHandler, getReviewsHandler, destroyReviewHandler}
+module.exports={createReviewHandler, getReviewsHomeHandler, getReviewsUserHandler, destroyReviewHandler}
